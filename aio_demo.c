@@ -197,8 +197,8 @@ void test_kqueue(struct aiocb* my_aiocb)
 	ctx.handler = kqueue_aio_handler;
 
 	my_aiocb->aio_sigevent.sigev_notify_kqueue = kqfd;
-    my_aiocb->aio_sigevent.sigev_notify = SIGEV_KEVENT;
-    my_aiocb->aio_sigevent.sigev_value.sigval_ptr = &ctx;
+	my_aiocb->aio_sigevent.sigev_notify = SIGEV_KEVENT;
+	my_aiocb->aio_sigevent.sigev_value.sigval_ptr = &ctx;
 
 	int ret = aio_read(my_aiocb);
 
