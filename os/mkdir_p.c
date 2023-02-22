@@ -34,8 +34,7 @@ int mkdir_p(const char *name, mode_t mode)
 		len++;
 	}
 
-	int i;
-	int has_valid = 0;
+	int i, has_valid = 0;
 
 	for (i = 0; i < len; i++)
 	{
@@ -49,15 +48,16 @@ int mkdir_p(const char *name, mode_t mode)
 		{
 			path[i] = '\0';
 			printf("mkdir %s\n", path);
-			if (mkdir(path, mode) != 0 && errno != EEXIST)
-				return -1;
+			ret = mkdir(path, mode);
+			if (ret != 0 && errno != EEXIST)
+				return ret;
 
 			path[i] = '/';
 			has_valid = 0;
 		}
 	}
 
-	return 0;
+	return ret;
 }
 
 int main(int argc, const char *argv[])
