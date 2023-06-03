@@ -1,10 +1,11 @@
 import numpy as np
 
-# y : 1*m  x : n*m  w: n*1
+# m: data_num; n: feature_num;
+#y : 1*m  x : n*m  w: n*1
 
-class LinearRegression():
+class LinearRegressionGradianDescent():
 	def __init__(self):
-		self.learning_rate = 0.0001
+		self.learning_rate = 1e-4#0.0001
 		self.total_iteration = 10000
 	
 	def get_yhat(self, X, w): # yhat = w1*x1 + w2*x2 + ...
@@ -37,12 +38,31 @@ class LinearRegression():
 				print(f'lost at iteration {it} is {loss}')
 
 			w = self.gradient_descent(w, X, y, yhat)
-
 		return w
+
+class LinearRegressionNormalEquation():
+	def __init__(self):
+		pass
+
+	def normal_equation(self, X, y):
+		ones = np.ones((X.shape[0], 1)) # make bias
+		X = np.append(ones, X, axis = 1) # add as extra feature to X
+		w = np.dot(np.linalg.pinv(np.dot(X.T, X)), np.dot(X.T, y))
+		return w
+
+	def main(self, X, y):
+		return self.normal_equation(X, y)
 
 if __name__ == '__main__':
 	X = np.random.rand(1, 500)
 	y = 3 * X + np.random.rand(1, 500) * 0.1 # noise
-	regression = LinearRegression()
-	w = regression.main(X, y)
 
+	print("simple way with L2 mean squared error:")
+	gd = LinearRegressionGradianDescent()
+	w = gd.main(X, y)
+	print(w)
+
+	print("normal equation:")
+	ne = LinearRegressionNormalEquation()
+	w = ne.main(X.T, y.T)
+	print(w)
