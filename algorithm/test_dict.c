@@ -113,11 +113,11 @@ void scan()
 	fprintf(stderr, "dict size = %d\n", dictSize(d));
 
  	char *context = "my context, for example, the place to put de";
-	int cursor = dictScan(d, 0, callback, NULL, context);
+	int cursor = dictScan(d, 0, callback, context);
 	fprintf(stderr, "scan get cursor = %lu\n", cursor);
 
 	while (cursor) {
-		cursor = dictScan(d, cursor, callback, NULL, context);
+		cursor = dictScan(d, cursor, callback, context);
 		fprintf(stderr, "scan get cursor = %lu\n", cursor);
 	}
 	fprintf(stderr, "scan finished\n");
@@ -143,7 +143,7 @@ void scan_and_expand()
 
 	// scan
  	char *context = "my context, for example, the place to put de";
-	int cursor = dictScan(d, 0, callback, NULL, context);
+	int cursor = dictScan(d, 0, callback, context);
 	fprintf(stderr, "scan get cursor = %lu\n", cursor);
 
 	// continue add
@@ -153,7 +153,7 @@ void scan_and_expand()
 
 	// continue scan
 	while (cursor) {
-		cursor = dictScan(d, cursor, callback, NULL, context);
+		cursor = dictScan(d, cursor, callback, context);
 		fprintf(stderr, "scan get cursor = %lu\n", cursor);
 	}
 	fprintf(stderr, "scan finished\n");
