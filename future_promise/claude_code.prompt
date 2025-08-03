@@ -1,0 +1,7 @@
+帮我在这里建一个简单的项目，我想跑通如下功能并且尝试自己增加后续功能：
+1. 底层：一个接口create_task(extract, callback);创建一个任务，这个任务有start接口可以开始执行比如：每1s调用一次extract，5次后调用一次callback。这层是没有future/promise的，纯回调，但是它调用的extract如果中间层卡住它肯定也卡住了。
+2. 中间层，实现并传入extract, callback都是std::function()，参数就是这个task本身，它保存了用户层的user_extract和user_callback实现底层数据回来了才把数据交给promiss并且调用user_extract或者说user_callback。也就是说它使用future/promise来实现如果底层有数据，它就调用户；如果用户等着了，它也交给用户。
+3. 用户层：用户有自己的extract和callback，类似于让用户拿到一个future，然后用户对promise去get的时候才去拿数据。如果数据不ready,用户线程是可以等在这里的。
+
+使用C++11的future/promise就可以了，不用智能指针
+
